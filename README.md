@@ -1,4 +1,4 @@
-<img src="https://raw.githubusercontent.com/dwndland/Chapter.Net.BLZ.Navigation/master/Icon.png" alt="logo" width="64"/>
+<img src="https://raw.githubusercontent.com/dwndlnd/Chapter.Net.BLZ.Navigation/master/Icon.png" alt="logo" width="64"/>
 
 # Chapter.Net.BLZ.Navigation Library
 
@@ -17,7 +17,7 @@
 
 ## Links
 * [NuGet](https://www.nuget.org/packages/Chapter.Net.BLZ.Navigation)
-* [GitHub](https://github.com/dwndland/Chapter.Net.BLZ.Navigation)
+* [GitHub](https://github.com/dwndlnd/Chapter.Net.BLZ.Navigation)
 
 ## License
 Copyright (c) David Wendland. All rights reserved.
