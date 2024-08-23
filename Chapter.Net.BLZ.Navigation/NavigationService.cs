@@ -1,5 +1,5 @@
 ﻿// -----------------------------------------------------------------------------------------------------------------
-// <copyright file="NavigationService.cs" company="my-libraries">
+// <copyright file="NavigationService.cs" company="dwndland">
 //     Copyright (c) David Wendland. All rights reserved.
 // </copyright>
 // -----------------------------------------------------------------------------------------------------------------
@@ -15,8 +15,8 @@ namespace Chapter.Net.BLZ.Navigation;
 public class NavigationService : INavigationService
 {
     private readonly IJSRuntime _jsRuntime;
-    private readonly IRouteProvider _routeProvider;
     private readonly NavigationManager _navigationManager;
+    private readonly IRouteProvider _routeProvider;
 
     /// <summary>
     ///     Creates a new instance of the <see cref="NavigationService" />.
