@@ -1,8 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Razor">
 
   <PropertyGroup>
-    <TargetFramework>net8.0</TargetFramework>
-    <Version>1.0.0</Version>
+    <TargetFrameworks>net8.0;net9.0</TargetFrameworks>
+    <Version>0.0.1</Version>
     <Authors>David Wendland</Authors>
     <Description></Description>
     <Copyright>Copyright (c) 2024 David Wendland</Copyright>
@@ -18,7 +18,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="8.0.4" />
+      <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="8.0.11" Condition="'$(TargetFramework)' == 'net8.0'" />
+      <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="9.0.0" Condition="'$(TargetFramework)' == 'net9.0'" />
   </ItemGroup>
 
   <ItemGroup>

@@ -7,24 +7,22 @@
 namespace Chapter.Net.BLZ.Navigation;
 
 /// <summary>
-///     Defines the options for the INavigationService.Navigate*.
+///     The options to navigate using <see cref="INavigationService.Navigate(object, NavigateOptions)" />.
 /// </summary>
 public class NavigateOptions
 {
     /// <summary>
-    ///     If true, bypasses client-side routing and forces the browser to load the new page from the server, whether the URI
-    ///     would normally be handled by the client-side router.
+    ///     Gets or sets a value indicating whether the target page shall be force reloaded or not.
     /// </summary>
     public bool ForceLoad { get; set; } = false;
 
     /// <summary>
-    ///     If true, replaces the current entry in the history stack.
-    ///     If false, appends the new entry to the history stack.
+    ///     Gets or sets a value indicating whether the target page shall replace the current in the history.
     /// </summary>
     public bool Replace { get; set; } = false;
 
     /// <summary>
-    ///     Gets or sets the state to append to the history entry.
+    ///     Gets or sets the state of the target page.
     /// </summary>
     public string HistoryEntryState { get; set; } = null;
 }

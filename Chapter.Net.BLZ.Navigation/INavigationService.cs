@@ -10,50 +10,48 @@ using System.Threading.Tasks;
 namespace Chapter.Net.BLZ.Navigation;
 
 /// <summary>
-///     Allow move from page to page within the application.
+///     The service to navigate through the application from viewmodels.
 /// </summary>
 public interface INavigationService
 {
     /// <summary>
-    ///     Navigates back.
+    ///     Triggered if a popup wants to get shown.
     /// </summary>
     Task NavigateBack();
 
     /// <summary>
-    ///     Navigates forward.
+    ///     Navigates forward the history.
     /// </summary>
+    /// <returns>The task to await.</returns>
     Task NavigateForward();
 
     /// <summary>
-    ///     Refreshes the current page.
+    ///     Reloads the current page.
     /// </summary>
     void Refresh();
 
     /// <summary>
-    ///     Refreshes the current page with the option to force reload.
+    ///     Reloads the current page.
     /// </summary>
-    /// <param name="forceReload">The indicator if reload shall be forced.</param>
+    /// <param name="forceReload">A value indicating whether the reload shall be forced or not.</param>
     void Refresh(bool forceReload);
 
     /// <summary>
-    ///     Navigates to a route registered by <see cref="RegisterTargets" />.
+    ///     Navigates to a particular page known by its keys. See <see cref="IRouteProvider.RegisterRoutes" />.
     /// </summary>
-    /// <param name="key">The registered route key.</param>
-    /// <exception cref="ArgumentNullException">The key cannot be null.</exception>
+    /// <param name="key">The key of the route.</param>
     void Navigate(object key);
 
     /// <summary>
-    ///     Navigates to a route registered by <see cref="RegisterTargets" /> with options.
+    ///     Navigates to a particular page known by its keys. See <see cref="IRouteProvider.RegisterRoutes" />.
     /// </summary>
-    /// <param name="key">The registered route key.</param>
-    /// <param name="options">The options.</param>
-    /// <exception cref="ArgumentNullException">The key cannot be null.</exception>
-    /// <exception cref="ArgumentNullException">The options cannot be null.</exception>
+    /// <param name="key">The key of the route.</param>
+    /// <param name="options">The navigation options.</param>
     void Navigate(object key, NavigateOptions options);
 
     /// <summary>
-    ///     Reads the history entry state from the current page.
+    ///     Gets the state of the current page.
     /// </summary>
-    /// <returns>The history entry state from the current page.</returns>
+    /// <returns>The state of the current page.</returns>
     string GetCurrentHistoryEntryState();
 }

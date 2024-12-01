@@ -4,30 +4,24 @@
 // </copyright>
 // -----------------------------------------------------------------------------------------------------------------
 
-using System;
-
 namespace Chapter.Net.BLZ.Navigation;
 
 /// <summary>
-///     Allow move from page to page within the application.
+///     Provides routes.
 /// </summary>
 public interface IRouteProvider
 {
     /// <summary>
-    ///     Assigns a key to a route to use for navigate.
+    ///     Registers a route and key pair.
     /// </summary>
-    /// <param name="key">The key.</param>
-    /// <param name="route">The target route.</param>
-    /// <exception cref="ArgumentNullException">The key cannot be null.</exception>
-    /// <exception cref="ArgumentNullException">The route cannot be null.</exception>
+    /// <param name="key">The key representation of a route.</param>
+    /// <param name="route">The route.</param>
     void RegisterRoutes(object key, string route);
 
     /// <summary>
-    ///     Provides the route for a key if registered.
+    ///     Gets the known route for a key.
     /// </summary>
-    /// <param name="key">The key for the route.</param>
-    /// <returns>The registered route.</returns>
-    /// <exception cref="ArgumentNullException">The key cannot be null.</exception>
-    /// <exception cref="InvalidOperationException">For the key no route is registered.</exception>
+    /// <param name="key">The key.</param>
+    /// <returns>The route.</returns>
     string GetRoute(object key);
 }

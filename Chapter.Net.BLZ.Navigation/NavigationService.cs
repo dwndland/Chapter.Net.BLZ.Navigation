@@ -19,7 +19,7 @@ public class NavigationService : INavigationService
     private readonly IRouteProvider _routeProvider;
 
     /// <summary>
-    ///     Creates a new instance of the <see cref="NavigationService" />.
+    ///     Creates a new instance of <see cref="NavigationService" />.
     /// </summary>
     /// <param name="routeProvider">The route provider.</param>
     /// <param name="navigationManager">The navigation manager.</param>
