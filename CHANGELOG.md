@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - Init project
 - Added possibility to navigate between pages from viewmodels using a NavigationService.
+- Added possibility to display overlaying popups and gets it result on close.
 ### Supported .Net Versions
 - .Net 8
 - .Net 9

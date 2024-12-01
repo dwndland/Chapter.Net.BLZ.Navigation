@@ -16,20 +16,29 @@ public class NavigationService : INavigationService
 {
     private readonly IJSRuntime _jsRuntime;
     private readonly NavigationManager _navigationManager;
+    private readonly IPopupStorage _popupStorage;
     private readonly IRouteProvider _routeProvider;
 
     /// <summary>
     ///     Creates a new instance of <see cref="NavigationService" />.
     /// </summary>
     /// <param name="routeProvider">The route provider.</param>
+    /// <param name="popupStorage">The popup storage.</param>
     /// <param name="navigationManager">The navigation manager.</param>
-    /// <param name="jsRuntime">The javascript runtime.</param>
-    public NavigationService(IRouteProvider routeProvider, NavigationManager navigationManager, IJSRuntime jsRuntime)
+    /// <param name="jsRuntime">The JS runtime.</param>
+    public NavigationService(IRouteProvider routeProvider, IPopupStorage popupStorage, NavigationManager navigationManager, IJSRuntime jsRuntime)
     {
         _routeProvider = routeProvider;
+        _popupStorage = popupStorage;
         _navigationManager = navigationManager;
         _jsRuntime = jsRuntime;
     }
+
+    /// <inheritdoc />
+    public event Action<object, object, Type> ShowPopupRequested;
+
+    /// <inheritdoc />
+    public event Action<object> ClosePopupRequested;
 
     /// <inheritdoc />
     public async Task NavigateBack()
@@ -75,6 +84,41 @@ public class NavigationService : INavigationService
     public string GetCurrentHistoryEntryState()
     {
         return _navigationManager.HistoryEntryState;
+    }
+
+    /// <inheritdoc />
+    public async Task ShowPopup<TComponent>(object hostId, object componentKey) where TComponent : IComponent
+    {
+        if (_popupStorage.HasOpenTask(componentKey))
+            throw new InvalidOperationException($"The component key {componentKey} is already in use.");
+
+        var openTask = new OpenTask(hostId, Guid.NewGuid(), typeof(TComponent));
+        _popupStorage.PushOpenTask(openTask);
+        ShowPopupRequested?.Invoke(hostId, openTask.ComponentKey, openTask.Component);
+        await openTask.Task.Task;
+    }
+
+    /// <inheritdoc />
+    public async Task<TResult> ShowPopup<TComponent, TResult>(object hostId, object componentKey) where TComponent : IComponent
+    {
+        if (_popupStorage.HasOpenTask(componentKey))
+            throw new InvalidOperationException($"The component key {componentKey} is already in use.");
+
+        var openTask = new OpenTask(hostId, componentKey, typeof(TComponent));
+        _popupStorage.PushOpenTask(openTask);
+        ShowPopupRequested?.Invoke(hostId, openTask.ComponentKey, openTask.Component);
+        return (TResult)await openTask.Task.Task;
+    }
+
+    /// <inheritdoc />
+    public void ClosePopup(object componentKey, object result = null)
+    {
+        var openTask = _popupStorage.PopOpenTask(componentKey);
+        if (openTask == null)
+            throw new InvalidOperationException($"The component key {componentKey} is unknown.");
+
+        ClosePopupRequested?.Invoke(componentKey);
+        openTask.Task.SetResult(result);
     }
 
     private NavigationOptions CreateOptions(NavigateOptions options)

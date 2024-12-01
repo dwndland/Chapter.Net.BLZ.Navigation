@@ -6,6 +6,7 @@
 
 using System;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Components;
 
 namespace Chapter.Net.BLZ.Navigation;
 
@@ -17,6 +18,17 @@ public interface INavigationService
     /// <summary>
     ///     Triggered if a popup wants to get shown.
     /// </summary>
+    event Action<object, object, Type> ShowPopupRequested;
+
+    /// <summary>
+    ///     Triggered if a popup wants to get closed.
+    /// </summary>
+    event Action<object> ClosePopupRequested;
+
+    /// <summary>
+    ///     Navigates back the history.
+    /// </summary>
+    /// <returns>The task to await.</returns>
     Task NavigateBack();
 
     /// <summary>
@@ -54,4 +66,30 @@ public interface INavigationService
     /// </summary>
     /// <returns>The state of the current page.</returns>
     string GetCurrentHistoryEntryState();
+
+    /// <summary>
+    ///     Shows a popup.
+    /// </summary>
+    /// <typeparam name="TComponent">The popup component.</typeparam>
+    /// <param name="hostId">The host where to show the popup.</param>
+    /// <param name="componentKey">The key of the component.</param>
+    /// <returns>The task to await (Finishes on close of the popup).</returns>
+    Task ShowPopup<TComponent>(object hostId, object componentKey) where TComponent : IComponent;
+
+    /// <summary>
+    ///     Shows a popup.
+    /// </summary>
+    /// <typeparam name="TComponent">The popup component.</typeparam>
+    /// <typeparam name="TResult">The expected result.</typeparam>
+    /// <param name="hostId">The host where to show the popup.</param>
+    /// <param name="componentKey">The key of the component.</param>
+    /// <returns>The popup result.</returns>
+    Task<TResult> ShowPopup<TComponent, TResult>(object hostId, object componentKey) where TComponent : IComponent;
+
+    /// <summary>
+    ///     Closes a popup by its key.
+    /// </summary>
+    /// <param name="componentKey">The popup key.</param>
+    /// <param name="result">The popup result.</param>
+    void ClosePopup(object componentKey, object result = null);
 }

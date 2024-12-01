@@ -8,6 +8,8 @@ Chapter.Net.BLZ.Navigation brings build in features to easy navigate through the
 ## Features
 - **Navigate:** Navigates between pages from viewmodels.
 - **Refresh:** Refreshes the current page.
+- **ShowPopup:** Shows a popup.
+- **ClosePopup:** Closes a popup from viewmodels.
 
 ## Getting Started
 
@@ -56,6 +58,75 @@ Chapter.Net.BLZ.Navigation brings build in features to easy navigate through the
             {
                 _navigationService.Navigate(ViewKeys.SetupView);
             }
+        }
+    }
+    ```
+
+5. **Show a popup overlay the main content from a viewmodel:**
+    - Create a popup view and its viewmodel.  
+    (In this demo the MVVM pattern is used from Chapter.Net.BLZ.)
+    ```razor
+    @inherits ViewModelComponent<DemoViewModel>
+
+    <div class="button-group">
+        <FluentButton>Yes</FluentButton>
+        <FluentButton>No</FluentButton>
+    </div>
+    ```
+    ```csharp
+    public class DemoViewModel : ObservableObject, IViewModel
+    {
+    }
+    ```
+    - After button click, close the popup with a result.
+    ```razor
+    @inherits ViewModelComponent<DemoViewModel>
+
+    <div class="button-group">
+        <FluentButton OnClick="DataContext.Yes">Yes</FluentButton>
+        <FluentButton OnClick="DataContext.No">No</FluentButton>
+    </div>
+    ```
+    ```csharp
+    public class DemoViewModel : ObservableObject, IViewModel
+    {
+        public void Yes()
+        {
+            _navigationService.ClosePopup(nameof(DemoView), true);
+        }
+
+        public void No()
+        {
+            _navigationService.ClosePopup(nameof(DemoView), false);
+        }
+    }
+    ```
+    - Define a spot where to show the popup.  
+    (MainLayout.razor)
+    ```razor
+    @inherits LayoutComponentBase
+
+    <FluentLayout>
+        <NavigationPresenter ID="@("PopupLayer")" />
+    </FluentLayout>
+    ```
+    - Show the popup ignoring any result.
+    ```csharp
+    public class MainViewModel : ObservableObject, IViewModel
+    {
+        public void ShowDemo()
+        {
+            _navigationService.ShowPopup<DemoView>("PopupLayer", nameof(DemoView));
+        }
+    }
+    ```
+    - Show the popup with receive its result.
+    ```csharp
+    public class MainViewModel : ObservableObject, IViewModel
+    {
+        public void ShowDemo()
+        {
+            var result = _navigationService.ShowPopup<DemoView, bool>("PopupLayer", nameof(DemoView));
         }
     }
     ```

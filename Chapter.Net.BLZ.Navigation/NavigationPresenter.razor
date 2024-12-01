@@ -1,0 +1,6 @@
+﻿<div class="overlay" style="display:@(IsComponentVisible ? "flex" : "none")">
+    @if (ComponentToRender is not null)
+    {
+        <DynamicComponent Type="ComponentToRender"/>
+    }
+</div>
