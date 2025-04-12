@@ -1,4 +1,4 @@
-<img src="https://raw.githubusercontent.com/dwndland/Chapter.Net.BLZ.Navigation/master/Icon.png" alt="logo" width="64"/>
+![Chapter](https://raw.githubusercontent.com/dwndland/Chapter.Net.BLZ.Navigation/master/Icon.png)
 
 # Chapter.Net.BLZ.Navigation Library
 Chapter.Net.BLZ.Navigation brings build in features to easy navigate through the application from viewmodels and display overlay popups easily.
